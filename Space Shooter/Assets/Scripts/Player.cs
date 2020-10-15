@@ -22,6 +22,10 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject _tripleShotPrefab;
 
+    private bool _isSpeedPowerupActive = false;
+    [SerializeField]
+    private GameObject _speedPowerupPrefabe;
+
 
     // Start is called before the first frame update
     void Start()
@@ -46,6 +50,8 @@ public class Player : MonoBehaviour
         }
     }
 
+    // Player Movement 
+    //*******************************
     void CalculateMovement()
     {
         // set up inputs for movement 
@@ -68,7 +74,10 @@ public class Player : MonoBehaviour
             transform.position = new Vector3(11.3f, transform.position.y, 0);
         }
     }
+    //*******************************
 
+    // Fire Laser
+    //*******************************
     void FireLaser()
     {
         _canFire = Time.time + _fireRate; // Fire cool down
@@ -83,7 +92,10 @@ public class Player : MonoBehaviour
         }
      
     }
+    //*******************************
 
+    // Damage Player
+    //*******************************
     public void Damage()
     {
         _lives--;
@@ -94,7 +106,10 @@ public class Player : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
+    //*******************************
 
+    // Triple Shot
+    //*******************************
     public void TripleShotActive()
     {
         _isTripleShotActive = true;
@@ -106,4 +121,20 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(5);
         _isTripleShotActive = false;
     }
+    //*******************************
+
+    // Speed Powerup
+    //*******************************
+    public void SpeedPowerupActive()
+    {
+        _isSpeedPowerupActive = true;
+        StartCoroutine(SpeedPowerDownRoutine());
+    }
+
+    IEnumerator SpeedPowerDownRoutine()
+    {
+        yield return new WaitForSeconds(5);
+        _isSpeedPowerupActive = false;
+    }
+    //*******************************
 }
