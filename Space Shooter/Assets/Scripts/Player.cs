@@ -6,6 +6,7 @@ public class Player : MonoBehaviour
 {
     [SerializeField]
     private float _speed = 5.0f;
+    private float _doubleSpeed = 2.0f;
 
     [SerializeField]
     private GameObject _laserPrefab;
@@ -59,7 +60,14 @@ public class Player : MonoBehaviour
         float VerticalInput = Input.GetAxis("Vertical");
 
         // the value of the movment 
-        transform.Translate(new Vector3(horizontalInput, VerticalInput, 0) * _speed * Time.deltaTime);
+        if (_isSpeedPowerupActive == true)
+        {
+            transform.Translate(new Vector3(horizontalInput, VerticalInput, 0) * _speed * Time.deltaTime);
+        }
+        else
+        {
+            transform.Translate(new Vector3(horizontalInput, VerticalInput, 0) * _speed * Time.deltaTime);
+        }
 
         // restrict the vertical movment 
         transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -3.8f, 0), 0);
@@ -128,6 +136,7 @@ public class Player : MonoBehaviour
     public void SpeedPowerupActive()
     {
         _isSpeedPowerupActive = true;
+        _speed *= _doubleSpeed;
         StartCoroutine(SpeedPowerDownRoutine());
     }
 
@@ -135,6 +144,7 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(5);
         _isSpeedPowerupActive = false;
+        _speed /= _doubleSpeed; 
     }
     //*******************************
 }
