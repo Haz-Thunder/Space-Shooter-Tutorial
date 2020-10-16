@@ -4,29 +4,31 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    private SpawnManager _spawnManager;
+
     [SerializeField]
     private float _speed = 5.0f;
     private float _doubleSpeed = 2.0f;
+    [SerializeField]
+    private float _fireRate = 0.15f;
+    private float _canFire = -1.0f;
+    [SerializeField]
+    private int _lives = 3;
 
     [SerializeField]
     private GameObject _laserPrefab;
     [SerializeField]
-    private float _fireRate = 0.15f;
-    private float _canFire = -1.0f;
-
+    private GameObject _tripleShotPrefab;
     [SerializeField]
-    private int _lives = 3;
-
-    private SpawnManager _spawnManager;
+    private GameObject _speedPowerupPrefab;
+    [SerializeField]
+    private GameObject _shieldPrefab;
+    [SerializeField]
+    private GameObject _shieldVisualizer;
 
     private bool _isTripleShotActive = false;
-    [SerializeField]
-    private GameObject _tripleShotPrefab;
-
     private bool _isSpeedPowerupActive = false;
-    [SerializeField]
-    private GameObject _speedPowerupPrefabe;
-
+    private bool _isShieldActive = false;
 
     // Start is called before the first frame update
     void Start()
@@ -84,6 +86,7 @@ public class Player : MonoBehaviour
     }
     //*******************************
 
+
     // Fire Laser
     //*******************************
     void FireLaser()
@@ -102,12 +105,19 @@ public class Player : MonoBehaviour
     }
     //*******************************
 
+
     // Damage Player
     //*******************************
     public void Damage()
     {
-        _lives--;
+        if (_isShieldActive == true)
+        {
+            _isShieldActive = false;
+            _shieldVisualizer.SetActive(false);
+            return;
+        }
 
+        _lives--;
         if (_lives < 1)
         {
             _spawnManager.OnPlayerDeath();
@@ -115,6 +125,7 @@ public class Player : MonoBehaviour
         }
     }
     //*******************************
+
 
     // Triple Shot
     //*******************************
@@ -131,6 +142,7 @@ public class Player : MonoBehaviour
     }
     //*******************************
 
+
     // Speed Powerup
     //*******************************
     public void SpeedPowerupActive()
@@ -145,6 +157,16 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(5);
         _isSpeedPowerupActive = false;
         _speed /= _doubleSpeed; 
+    }
+    //*******************************
+
+
+    // Shield Powerup
+    //*******************************
+    public void ShieldPowerupActive()
+    {
+        _isShieldActive = true;
+        _shieldVisualizer.SetActive(true);
     }
     //*******************************
 }
