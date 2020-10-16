@@ -5,6 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     private SpawnManager _spawnManager;
+    private UIManager _uiManager;
 
     [SerializeField]
     private float _speed = 5.0f;
@@ -12,8 +13,11 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float _fireRate = 0.15f;
     private float _canFire = -1.0f;
+
     [SerializeField]
     private int _lives = 3;
+    [SerializeField]
+    private int _score = 0;
 
     [SerializeField]
     private GameObject _laserPrefab;
@@ -34,11 +38,18 @@ public class Player : MonoBehaviour
     void Start()
     {
         transform.position = new Vector3(0, 0, 0);
+
         _spawnManager = GameObject.Find("Spawn Manager").GetComponent<SpawnManager>();
+        _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
 
         if (_spawnManager == null)
         {
             Debug.LogError("The Spawn Manager is NULL.");
+        }
+
+        if (_uiManager == null)
+        {
+            Debug.LogError("The UI Manager is Null.");
         }
     }
 
@@ -169,4 +180,13 @@ public class Player : MonoBehaviour
         _shieldVisualizer.SetActive(true);
     }
     //*******************************
+
+
+    // Score
+    //*******************************
+    public void AddScore(int points)
+    {
+        _score += points;
+        _uiManager.UpdateScore(_score);
+    }
 }
