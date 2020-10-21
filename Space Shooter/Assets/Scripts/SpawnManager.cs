@@ -4,12 +4,9 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject _enemyPrefab;
-    [SerializeField]
-    private GameObject _enemyContaner;
-    [SerializeField]
-    private GameObject[] powerups;
+    [SerializeField] private GameObject _enemyPrefab;
+    [SerializeField] private GameObject _enemyContaner;
+    [SerializeField] private GameObject[] powerups;
     private bool _stopSpawning = false;
 
     // Start is called before the first frame update

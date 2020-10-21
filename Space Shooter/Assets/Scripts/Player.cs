@@ -7,28 +7,19 @@ public class Player : MonoBehaviour
     private SpawnManager _spawnManager;
     private UIManager _uiManager;
 
-    [SerializeField]
-    private float _speed = 5.0f;
+    [SerializeField] private float _speed = 5.0f;
     private float _doubleSpeed = 2.0f;
-    [SerializeField]
-    private float _fireRate = 0.15f;
+    [SerializeField] private float _fireRate = 0.15f;
     private float _canFire = -1.0f;
 
-    [SerializeField]
-    private int _lives = 3;
-    [SerializeField]
-    private int _score = 0;
+    [SerializeField] private int _lives = 3;
+    [SerializeField] private int _score = 0;
 
-    [SerializeField]
-    private GameObject _laserPrefab;
-    [SerializeField]
-    private GameObject _tripleShotPrefab;
-    [SerializeField]
-    private GameObject _speedPowerupPrefab;
-    [SerializeField]
-    private GameObject _shieldPrefab;
-    [SerializeField]
-    private GameObject _shieldVisualizer;
+    [SerializeField] private GameObject _laserPrefab;
+    [SerializeField] private GameObject _tripleShotPrefab;
+    [SerializeField] private GameObject _speedPowerupPrefab;
+    [SerializeField] private GameObject _shieldPrefab;
+    [SerializeField] private GameObject _shieldVisualizer;
 
     private bool _isTripleShotActive = false;
     private bool _isSpeedPowerupActive = false;
@@ -129,6 +120,7 @@ public class Player : MonoBehaviour
         }
 
         _lives--;
+        _uiManager.UpdateLives(_lives);
         if (_lives < 1)
         {
             _spawnManager.OnPlayerDeath();
@@ -182,11 +174,12 @@ public class Player : MonoBehaviour
     //*******************************
 
 
-    // Score
+    // Add Score
     //*******************************
     public void AddScore(int points)
     {
         _score += points;
         _uiManager.UpdateScore(_score);
     }
+    //*******************************
 }

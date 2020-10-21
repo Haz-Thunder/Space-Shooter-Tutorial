@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class Powerup : MonoBehaviour
 {
-    [SerializeField]
-    private float _speed = 3.0f;
+    [SerializeField] private float _speed = 3.0f;
 
-    [SerializeField] // 0 = Triple Shot, 1 = Speed, 2 = Shield
-    private int _powerupID;
+    // 0 = Triple Shot, 1 = Speed, 2 = Shield
+    [SerializeField] private int _powerupID;
 
     // Update is called once per frame
     void Update()
